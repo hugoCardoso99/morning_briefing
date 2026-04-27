@@ -21,7 +21,13 @@ Output is saved to `output/briefing_YYYY-MM-DD.md`.
 ## Architecture
 
 ```
-init → [weather, news, calendar, stocks] (parallel) → router → compiler → .md
+                ┌─► weather ─────────────────┐
+                ├─► news ────────────────────┤
+init (context) ─┤                            ├─► router (rules) ─► compiler ─► .md
+                ├─► calendar ────────────────┤
+                └─► stocks ─► finance_news ──┘
 ```
 
-Built with LangGraph's `StateGraph` — no LLMs, just API orchestration with conditional routing.
+Parallel fan-out from `init` to four branches. The `stocks → finance_news` chain runs sequentially on its own branch while the other three run independently. All branches converge into the `router` (fan-in), which applies business rules (weekend logic, severe weather promotion, keyword flagging, holiday alerts), then the `compiler` assembles the final markdown.
+
+Built with LangGraph's `StateGraph` and Pydantic state — no LLMs, just API orchestration with conditional routing.

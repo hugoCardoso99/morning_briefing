@@ -1,6 +1,6 @@
 """
 News scraper utilities for Portuguese news sites.
-Extracts headlines, lead paragraphs, and categories from Expresso and Jornal de Notícias.
+Extracts headlines and categories from Expresso and Jornal de Notícias.
 """
 
 import re
@@ -120,8 +120,8 @@ def _extract_category(article_url: str, article_tag=None) -> str:
 
 def scrape_expresso() -> list[dict]:
     """
-    Scrape headlines and leads from Expresso homepage.
-    Returns a list of dicts: {source, headline, lead, url, category}
+    Scrape headlines from Expresso homepage.
+    Returns a list of dicts: {source, headline, url, category}
     """
     url = "https://expresso.pt"
     articles = []
@@ -163,8 +163,8 @@ def scrape_expresso() -> list[dict]:
 
 def scrape_jn() -> list[dict]:
     """
-    Scrape headlines and leads from Jornal de Notícias homepage.
-    Returns a list of dicts: {source, headline, lead, url, category}
+    Scrape headlines from Jornal de Notícias homepage.
+    Returns a list of dicts: {source, headline, url, category}
     """
     url = "https://www.jn.pt"
     articles = []
